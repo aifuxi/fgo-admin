@@ -4,3 +4,16 @@ export interface CommonResponse<T> {
   data: T;
   timestamp: string;
 }
+
+export interface CommonModel {
+  id: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface ListReq {
+  page: number;
+  pageSize: number;
+  sortBy?: "createdAt" | "updatedAt";
+  order?: "asc" | "desc";
+}

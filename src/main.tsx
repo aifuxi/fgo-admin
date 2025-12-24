@@ -1,4 +1,3 @@
-import { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
 import { RouterProvider, createRouter } from "@tanstack/react-router";
 import PubSub from "pubsub-js";
@@ -26,8 +25,8 @@ Toast.config({
 });
 
 // 监听 API 错误事件
-PubSub.subscribe(TOPIC_API_ERROR, (_, msg: string) => {
-  Toast.error({ content: msg });
+PubSub.subscribe(TOPIC_API_ERROR, (_, msg: unknown) => {
+  Toast.error({ content: String(msg) });
 });
 
 // Render the app
@@ -36,10 +35,8 @@ const rootElement = document.getElementById("root")!;
 if (!rootElement.innerHTML) {
   const root = ReactDOM.createRoot(rootElement);
   root.render(
-    <StrictMode>
-      <ConfigProvider>
-        <RouterProvider router={router} />
-      </ConfigProvider>
-    </StrictMode>
+    <ConfigProvider>
+      <RouterProvider router={router} />
+    </ConfigProvider>
   );
 }

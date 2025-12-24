@@ -17,6 +17,7 @@
     "@tailwindcss/vite": "^4.1.18",
     "@tanstack/react-router": "^1.143.3",
     "@tanstack/react-router-devtools": "^1.143.3",
+    "ahooks": "^3.9.6",
     "axios": "^1.13.2",
     "pubsub-js": "^1.9.5",
     "react": "^19.2.0",

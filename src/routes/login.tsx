@@ -1,6 +1,8 @@
 import { Button, Form, Layout, Toast, Typography } from "@douyinfe/semi-ui-19";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { login, type LoginRequest } from "../api/auth";
+import { setToken } from "../utils/token";
+import { useRequest } from "ahooks";
 
 export const Route = createFileRoute("/login")({
   component: Login,
@@ -8,6 +10,15 @@ export const Route = createFileRoute("/login")({
 
 function Login() {
   const navigate = useNavigate();
+
+  const { loading, run } = useRequest(login, {
+    manual: true,
+    onSuccess(res) {
+      setToken(res.data.token);
+      navigate({ to: "/", replace: true });
+      Toast.success({ content: "登录成功" });
+    },
+  });
 
   return (
     <Layout className="relative h-svh flex flex-col">
@@ -35,18 +46,15 @@ function Login() {
           <Typography.Title heading={2}>Sign In</Typography.Title>
 
           <Form<LoginRequest>
+            disabled={loading}
             layout="vertical"
             className="w-2xs"
             initValues={{ email: "admin@example.com", password: "123456" }}
-            onSubmit={async (values) => {
-              const res = await login({
+            onSubmit={(values) => {
+              run({
                 email: values.email,
                 password: values.password,
               });
-              void navigate({ to: "/", replace: true });
-              Toast.success({ content: "登录成功" });
-
-              console.log(">> res", res);
             }}
           >
             <Form.Input
@@ -70,7 +78,13 @@ function Login() {
             ></Form.Input>
 
             <Form.Slot noLabel>
-              <Button theme="solid" type="primary" htmlType="submit" block>
+              <Button
+                theme="solid"
+                type="primary"
+                htmlType="submit"
+                block
+                loading={loading}
+              >
                 登录
               </Button>
             </Form.Slot>

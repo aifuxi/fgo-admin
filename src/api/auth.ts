@@ -1,5 +1,4 @@
 import request from "../libs/request";
-import {} from "axios";
 import type { CommonResponse } from "./common";
 
 export interface LoginRequest {
