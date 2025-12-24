@@ -1,23 +1,46 @@
-import { defineConfig } from "vite";
+import { defineConfig, loadEnv } from "vite";
 import { tanstackRouter } from "@tanstack/router-plugin/vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 
 // https://vite.dev/config/
-export default defineConfig({
-  plugins: [
-    // Please make sure that '@tanstack/router-plugin' is passed before '@vitejs/plugin-react'
-    tanstackRouter({
-      target: "react",
-      autoCodeSplitting: true,
-    }),
+export default defineConfig(({ mode }) => {
+  const env = loadEnv(mode, process.cwd());
 
-    react({
-      babel: {
-        plugins: [["babel-plugin-react-compiler"]],
+  console.log("加载的环境变量：", env); // 打印验证！
+
+  return {
+    plugins: [
+      // Please make sure that '@tanstack/router-plugin' is passed before '@vitejs/plugin-react'
+      tanstackRouter({
+        target: "react",
+        autoCodeSplitting: true,
+      }),
+
+      react({
+        babel: {
+          plugins: [["babel-plugin-react-compiler"]],
+        },
+      }),
+
+      tailwindcss(),
+    ],
+
+    server: {
+      // 代理配置
+      proxy: {
+        // 匹配以 /api 开头的请求（前端请求路径）
+        "/api": {
+          target: env.VITE_API_BASE_URL, // 后端接口的基础域名（真实请求地址）
+          changeOrigin: true, // 关键：修改请求头的 Origin 为 target 域名（解决跨域核心）
+          // 可选：支持 HTTPS 接口（如后端是 https 域名）
+          // secure: false, // 忽略 SSL 证书验证（开发环境用）
+          // 可选：自定义请求头
+          // headers: {
+          //   'X-Real-IP': '127.0.0.1'
+          // }
+        },
       },
-    }),
-
-    tailwindcss(),
-  ],
+    },
+  };
 });
