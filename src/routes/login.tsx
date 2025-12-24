@@ -1,8 +1,19 @@
-import { Button, Form, Layout, Toast, Typography } from "@douyinfe/semi-ui-19";
+import {
+  Button,
+  Empty,
+  Form,
+  Layout,
+  Toast,
+  Typography,
+} from "@douyinfe/semi-ui-19";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { login, type LoginRequest } from "../api/auth";
 import { setToken } from "../utils/token";
 import { useRequest } from "ahooks";
+import {
+  IllustrationIdle,
+  IllustrationIdleDark,
+} from "@douyinfe/semi-illustrations";
 
 export const Route = createFileRoute("/login")({
   component: Login,
@@ -23,27 +34,20 @@ function Login() {
   return (
     <Layout className="relative h-svh flex flex-col">
       <Layout.Header className="px-8 py-6">
-        <Typography.Title heading={4}>Your Logo</Typography.Title>
+        <Typography.Title heading={4}>后台管理</Typography.Title>
       </Layout.Header>
       <Layout.Content className="flex-1 h-full grid grid-cols-12">
         <div className="col-span-7 flex flex-col h-full justify-center items-center">
-          <div className="flex flex-col">
-            <Typography.Title heading={2}>Sign In to</Typography.Title>
-            <Typography.Paragraph className="text-2xl">
-              Lorem lpssum is simply
-            </Typography.Paragraph>
-            <div className="flex flex-col pt-8">
-              <Typography.Text>
-                If you dont have an account register
-              </Typography.Text>
-              <Typography.Text>
-                You can <Typography.Text link>Register here!</Typography.Text>
-              </Typography.Text>
-            </div>
-          </div>
+          <Empty
+            image={<IllustrationIdle style={{ width: 400, height: 400 }} />}
+            darkModeImage={
+              <IllustrationIdleDark style={{ width: 400, height: 400 }} />
+            }
+            description={"神游四方"}
+          />
         </div>
         <div className="col-span-5 flex flex-col h-full justify-center">
-          <Typography.Title heading={2}>Sign In</Typography.Title>
+          <Typography.Title heading={2}>后台登录</Typography.Title>
 
           <Form<LoginRequest>
             disabled={loading}
