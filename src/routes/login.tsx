@@ -64,6 +64,7 @@ function Login() {
             <Form.Input
               field="email"
               label="邮箱"
+              size="large"
               placeholder="请输入邮箱"
               rules={[
                 { required: true, message: "请输入邮箱" },
@@ -73,6 +74,7 @@ function Login() {
             <Form.Input
               field="password"
               label="密码"
+              size="large"
               placeholder="请输入密码"
               rules={[
                 { required: true, message: "请输入密码" },
@@ -86,6 +88,7 @@ function Login() {
                 theme="solid"
                 type="primary"
                 htmlType="submit"
+                size="large"
                 block
                 loading={loading}
               >
