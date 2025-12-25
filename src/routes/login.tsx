@@ -6,7 +6,7 @@ import {
   Toast,
   Typography,
 } from "@douyinfe/semi-ui-19";
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { useNavigate } from "react-router-dom";
 import { login, type LoginRequest } from "../api/auth";
 import { setToken } from "../utils/token";
 import { useRequest } from "ahooks";
@@ -15,18 +15,14 @@ import {
   IllustrationIdleDark,
 } from "@douyinfe/semi-illustrations";
 
-export const Route = createFileRoute("/login")({
-  component: Login,
-});
-
-function Login() {
+export default function Login() {
   const navigate = useNavigate();
 
   const { loading, run } = useRequest(login, {
     manual: true,
     onSuccess(res) {
       setToken(res.data.token);
-      navigate({ to: "/", replace: true });
+      navigate("/");
       Toast.success({ content: "登录成功" });
     },
   });

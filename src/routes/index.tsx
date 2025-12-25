@@ -1,12 +1,7 @@
-import { createFileRoute } from "@tanstack/react-router";
 import { getUserInfo } from "../api/user";
 import { useRequest } from "ahooks";
 
-export const Route = createFileRoute("/")({
-  component: Index,
-});
-
-function Index() {
+export default function Index() {
   const { data, loading } = useRequest(getUserInfo);
 
   return (

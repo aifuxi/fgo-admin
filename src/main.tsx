@@ -1,23 +1,36 @@
 import ReactDOM from "react-dom/client";
-import { RouterProvider, createRouter } from "@tanstack/react-router";
 import PubSub from "pubsub-js";
 
 import "./index.css";
 
-// Import the generated route tree
-import { routeTree } from "./routeTree.gen";
 import { TOPIC_API_ERROR } from "./constants/eventTopic";
 import { ConfigProvider, Toast } from "@douyinfe/semi-ui-19";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Index from "./routes";
+import Login from "./routes/login";
+import About from "./routes/about";
+import MainLayout from "./components/layout";
 
-// Create a new router instance
-const router = createRouter({ routeTree });
-
-// Register the router instance for type safety
-declare module "@tanstack/react-router" {
-  interface Register {
-    router: typeof router;
-  }
-}
+const router = createBrowserRouter([
+  {
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "/",
+    Component: MainLayout,
+    children: [
+      {
+        index: true,
+        Component: Index,
+      },
+      {
+        path: "/about",
+        Component: About,
+      },
+    ],
+  },
+]);
 
 // 全局配置 Toast 组件
 Toast.config({
