@@ -2,6 +2,7 @@ import { defineConfig, loadEnv } from "vite";
 import { tanstackRouter } from "@tanstack/router-plugin/vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
+import vitePluginImp from "vite-plugin-imp";
 
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {
@@ -24,6 +25,19 @@ export default defineConfig(({ mode }) => {
       }),
 
       tailwindcss(),
+
+      vitePluginImp({
+        // 配置 Semi 按需加载，禁用自动导入样式
+        libList: [
+          {
+            libName: "@douyinfe/semi-ui-19",
+            style: () => false, // 核心：设置为 false，禁用自动导入样式
+            // 若需手动导入 LESS 而非 CSS，可配置 style 路径（可选）
+            // style: (name) => `@semi-bot/semi-theme-fgo/semi.css`,
+          },
+          // 若使用 Semi 图标库，也需禁用自动导入
+        ],
+      }),
     ],
 
     server: {
