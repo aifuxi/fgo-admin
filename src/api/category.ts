@@ -1,10 +1,10 @@
-import request from "../libs/request";
+import request from "@/libs/request";
 import type { CommonModel, CommonResponse, ListReq } from "./common";
 
 export interface Category extends CommonModel {
   name: string;
   slug: string;
-  description?: string;
+  description: string;
 }
 
 export interface CategoryListReq extends ListReq {
