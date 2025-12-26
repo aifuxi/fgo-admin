@@ -154,6 +154,7 @@ export default function Tag() {
               field="name"
               label="标签名称"
               size="large"
+              showClear
               placeholder="请输入标签名称"
               onEnterPress={handleSubmit}
             ></Form.Input>
@@ -161,6 +162,7 @@ export default function Tag() {
               field="slug"
               label="标签别名"
               size="large"
+              showClear
               placeholder="请输入标签别名"
               onEnterPress={handleSubmit}
             ></Form.Input>

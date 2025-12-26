@@ -38,19 +38,16 @@ const CreateTagModal = NiceModal.create(({ onSuccess, tagID }: Props) => {
     },
   });
 
-  const { loading: detailLoading } = useRequest(
-    () => getTagDetail(tagID!),
-    {
-      ready: Boolean(tagID),
-      onSuccess(resp) {
-        formRef.current?.setValues({
-          name: resp?.data?.name,
-          slug: resp?.data?.slug,
-          description: resp?.data?.description,
-        });
-      },
-    }
-  );
+  const { loading: detailLoading } = useRequest(() => getTagDetail(tagID!), {
+    ready: Boolean(tagID),
+    onSuccess(resp) {
+      formRef.current?.setValues({
+        name: resp?.data?.name,
+        slug: resp?.data?.slug,
+        description: resp?.data?.description,
+      });
+    },
+  });
 
   const operationLoading = tagID ? updateLoading : loading;
 
@@ -93,6 +90,7 @@ const CreateTagModal = NiceModal.create(({ onSuccess, tagID }: Props) => {
             field="name"
             label="标签名称"
             size="large"
+            showClear
             placeholder="请输入标签名称"
             rules={[{ required: true, message: "请输入标签名称" }]}
             extraText="这将是它在站点上显示的名字"
@@ -101,6 +99,7 @@ const CreateTagModal = NiceModal.create(({ onSuccess, tagID }: Props) => {
             field="slug"
             label="标签别名"
             size="large"
+            showClear
             placeholder="请输入标签别名"
             rules={[{ required: true, message: "请输入标签别名" }]}
             extraText="「别名」是在 URL 中使用的别称，仅支持小写字母、数字和短横线(-)"
@@ -108,6 +107,7 @@ const CreateTagModal = NiceModal.create(({ onSuccess, tagID }: Props) => {
           <Form.TextArea
             field="description"
             label="标签描述"
+            showClear
             placeholder="请输入标签描述"
             rules={[{ required: true, message: "请输入标签描述" }]}
           ></Form.TextArea>
@@ -118,4 +118,3 @@ const CreateTagModal = NiceModal.create(({ onSuccess, tagID }: Props) => {
 });
 
 export default CreateTagModal;
-

@@ -158,6 +158,7 @@ export default function Category() {
               field="name"
               label="分类名称"
               size="large"
+              showClear
               placeholder="请输入分类名称"
               onEnterPress={handleSubmit}
             ></Form.Input>
@@ -165,6 +166,7 @@ export default function Category() {
               field="slug"
               label="分类别名"
               size="large"
+              showClear
               placeholder="请输入分类别名"
               onEnterPress={handleSubmit}
             ></Form.Input>

@@ -97,6 +97,7 @@ const CreateCategoryModal = NiceModal.create(
               field="name"
               label="分类名称"
               size="large"
+              showClear
               placeholder="请输入分类名称"
               rules={[{ required: true, message: "请输入分类名称" }]}
               extraText="这将是它在站点上显示的名字"
@@ -105,6 +106,7 @@ const CreateCategoryModal = NiceModal.create(
               field="slug"
               label="分类别名"
               size="large"
+              showClear
               placeholder="请输入分类别名"
               rules={[{ required: true, message: "请输入分类别名" }]}
               extraText="「别名」是在 URL 中使用的别称，仅支持小写字母、数字和短横线(-)"
@@ -112,6 +114,7 @@ const CreateCategoryModal = NiceModal.create(
             <Form.TextArea
               field="description"
               label="分类描述"
+              showClear
               placeholder="请输入分类描述"
               rules={[{ required: true, message: "请输入分类描述" }]}
             ></Form.TextArea>
