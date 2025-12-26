@@ -7,7 +7,6 @@ import { TOPIC_API_ERROR } from "@/constants/event-topics";
 import { ConfigProvider, Toast } from "@douyinfe/semi-ui-19";
 import { RouterProvider } from "react-router-dom";
 import router from "@/router";
-import NiceModal from "@ebay/nice-modal-react";
 
 // 全局配置 Toast 组件
 Toast.config({
@@ -23,10 +22,8 @@ const rootElement = document.getElementById("root");
 if (!rootElement?.innerHTML) {
   const root = ReactDOM.createRoot(rootElement!);
   root.render(
-    <NiceModal.Provider>
-      <ConfigProvider>
-        <RouterProvider router={router} />
-      </ConfigProvider>
-    </NiceModal.Provider>
+    <ConfigProvider>
+      <RouterProvider router={router} />
+    </ConfigProvider>
   );
 }

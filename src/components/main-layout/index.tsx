@@ -1,4 +1,11 @@
-import { Layout, Nav, Button, Avatar } from "@douyinfe/semi-ui-19";
+import {
+  Layout,
+  Nav,
+  Button,
+  Avatar,
+  Dropdown,
+  Typography,
+} from "@douyinfe/semi-ui-19";
 import {
   IconBell,
   IconHelpCircle,
@@ -6,11 +13,16 @@ import {
   IconHistogram,
   IconLive,
   IconSemiLogo,
+  IconExit,
+  IconUser,
 } from "@douyinfe/semi-icons";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
-import { ROUTES } from "../../constants/route";
+import { ROUTES } from "@/constants/route";
 import { useState } from "react";
 import { useMount } from "ahooks";
+
+import LogoutConfirmModal from "./logout-confirm-modal";
+import NiceModal from "@ebay/nice-modal-react";
 
 export default function MainLayout() {
   const { Header, Footer, Sider, Content } = Layout;
@@ -99,9 +111,40 @@ export default function MainLayout() {
                     marginRight: "12px",
                   }}
                 />
-                <Avatar color="blue" size="small">
-                  FC
-                </Avatar>
+                <Dropdown
+                  position="bottomLeft"
+                  render={
+                    <Dropdown.Menu>
+                      <Dropdown.Item>
+                        <div className="flex items-center gap-4">
+                          <Avatar color="blue" size="small">
+                            FC
+                          </Avatar>
+                          <div>
+                            <Typography.Text strong>aifuxi</Typography.Text>
+                            <div>UID: 1000000000</div>
+                          </div>
+                        </div>
+                      </Dropdown.Item>
+                      <Dropdown.Divider />
+                      <Dropdown.Item icon={<IconUser />}>
+                        个人设置
+                      </Dropdown.Item>
+                      <Dropdown.Item
+                        icon={<IconExit />}
+                        onClick={() => NiceModal.show(LogoutConfirmModal)}
+                      >
+                        退出登录
+                      </Dropdown.Item>
+                    </Dropdown.Menu>
+                  }
+                >
+                  <div>
+                    <Avatar color="blue" size="small">
+                      FC
+                    </Avatar>
+                  </div>
+                </Dropdown>
               </>
             }
           ></Nav>

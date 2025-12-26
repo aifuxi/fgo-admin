@@ -57,6 +57,7 @@ export default function Login() {
               label="邮箱"
               size="large"
               placeholder="请输入邮箱"
+              showClear
               rules={[
                 { required: true, message: "请输入邮箱" },
                 { type: "email", message: "请输入正确的邮箱格式" },
@@ -66,6 +67,8 @@ export default function Login() {
               field="password"
               label="密码"
               size="large"
+              type="password"
+              showClear
               placeholder="请输入密码"
               rules={[
                 { required: true, message: "请输入密码" },

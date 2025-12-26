@@ -4,6 +4,7 @@ import Login from "@/routes/login";
 import Index from "@/routes";
 import Category from "@/routes/category";
 import Tag from "@/routes/tag";
+import NiceModal from "@ebay/nice-modal-react";
 
 const router = createBrowserRouter([
   {
@@ -12,7 +13,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/",
-    Component: MainLayout,
+    element: (
+      <NiceModal.Provider>
+        <MainLayout />
+      </NiceModal.Provider>
+    ),
     children: [
       {
         index: true,
