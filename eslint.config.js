@@ -34,6 +34,8 @@ export default defineConfig([
       "@typescript-eslint/prefer-promise-reject-errors": "off",
       "@typescript-eslint/no-floating-promises": "off",
       "@typescript-eslint/no-unnecessary-condition": "off",
+      "@typescript-eslint/no-explicit-any": "error",
+      "@typescript-eslint/no-non-null-assertion": "warn",
     },
   },
 ]);

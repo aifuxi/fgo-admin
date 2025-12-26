@@ -1,19 +1,14 @@
-import {
-  Button,
-  Empty,
-  Form,
-  Layout,
-  Toast,
-  Typography,
-} from "@douyinfe/semi-ui-19";
+import { Button, Empty, Form, Layout, Typography } from "@douyinfe/semi-ui-19";
 import { useNavigate } from "react-router-dom";
-import { login, type LoginRequest } from "../api/auth";
-import { setToken } from "../utils/token";
+import { login, type LoginRequest } from "@/api/auth";
+import { setToken } from "@/utils/token";
 import { useRequest } from "ahooks";
 import {
   IllustrationIdle,
   IllustrationIdleDark,
 } from "@douyinfe/semi-illustrations";
+import { showSuccessToast } from "@/libs/toast";
+import { ROUTES } from "@/constants/route";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -22,8 +17,8 @@ export default function Login() {
     manual: true,
     onSuccess(res) {
       setToken(res.data.token);
-      navigate("/");
-      Toast.success({ content: "登录成功" });
+      navigate(ROUTES.Home.href);
+      showSuccessToast("登录成功");
     },
   });
 

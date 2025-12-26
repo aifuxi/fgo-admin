@@ -1,8 +1,8 @@
 import axios, { AxiosError } from "axios";
-import type { CommonResponse } from "../api/common";
+import type { CommonResponse } from "@/api/common";
 import PubSub from "pubsub-js";
-import { TOPIC_API_ERROR } from "../constants/eventTopic";
-import { getToken, setToken } from "../utils/token";
+import { TOPIC_API_ERROR } from "@/constants/event-topics";
+import { getToken, setToken } from "@/utils/token";
 
 const request = axios.create({
   baseURL: "/",

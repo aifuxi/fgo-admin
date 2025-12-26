@@ -1,4 +1,4 @@
-import { getUserInfo } from "../api/user";
+import { getUserInfo } from "@/api/user";
 import { useRequest } from "ahooks";
 
 export default function Index() {

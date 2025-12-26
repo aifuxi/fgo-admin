@@ -1,17 +1,32 @@
-import { Layout, Nav, Button, Breadcrumb, Avatar } from "@douyinfe/semi-ui-19";
+import { Layout, Nav, Button, Avatar } from "@douyinfe/semi-ui-19";
 import {
   IconBell,
   IconHelpCircle,
   IconHome,
   IconHistogram,
   IconLive,
-  IconSetting,
   IconSemiLogo,
 } from "@douyinfe/semi-icons";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { ROUTES } from "../../constants/route";
+import { useState } from "react";
+import { useMount } from "ahooks";
 
 export default function MainLayout() {
   const { Header, Footer, Sider, Content } = Layout;
+
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
+
+  console.log("selectedKeys", selectedKeys);
+  console.log("navigation.location?.pathname", location.pathname);
+
+  useMount(() => {
+    setSelectedKeys([location.pathname ?? ROUTES.Home.href]);
+  });
+
   return (
     <Layout
       className="h-full"
@@ -19,24 +34,35 @@ export default function MainLayout() {
     >
       <Sider style={{ backgroundColor: "var(--semi-color-bg-1)" }}>
         <Nav
-          defaultSelectedKeys={["Home"]}
           style={{ maxWidth: 220, height: "100%" }}
+          selectedKeys={selectedKeys}
           items={[
-            { itemKey: "Home", text: "首页", icon: <IconHome size="large" /> },
             {
-              itemKey: "Histogram",
-              text: "基础数据",
+              itemKey: ROUTES.Home.href,
+              text: ROUTES.Home.name,
+              icon: <IconHome size="large" />,
+              onClick: () => {
+                setSelectedKeys([ROUTES.Home.href]);
+                navigate(ROUTES.Home.href);
+              },
+            },
+            {
+              itemKey: ROUTES.Category.href,
+              text: ROUTES.Category.name,
               icon: <IconHistogram size="large" />,
+              onClick: () => {
+                setSelectedKeys([ROUTES.Category.href]);
+                navigate(ROUTES.Category.href);
+              },
             },
             {
-              itemKey: "Live",
-              text: "测试功能",
+              itemKey: ROUTES.Tag.href,
+              text: ROUTES.Tag.name,
               icon: <IconLive size="large" />,
-            },
-            {
-              itemKey: "Setting",
-              text: "设置",
-              icon: <IconSetting size="large" />,
+              onClick: () => {
+                setSelectedKeys([ROUTES.Tag.href]);
+                navigate(ROUTES.Tag.href);
+              },
             },
           ]}
           header={{
@@ -48,8 +74,11 @@ export default function MainLayout() {
           }}
         />
       </Sider>
-      <Layout>
-        <Header style={{ backgroundColor: "var(--semi-color-bg-1)" }}>
+      <Layout className="relative">
+        <Header
+          className="sticky top-0 z-10"
+          style={{ backgroundColor: "var(--semi-color-bg-1)" }}
+        >
           <Nav
             mode="horizontal"
             footer={
@@ -70,8 +99,8 @@ export default function MainLayout() {
                     marginRight: "12px",
                   }}
                 />
-                <Avatar color="orange" size="small">
-                  YJ
+                <Avatar color="blue" size="small">
+                  FC
                 </Avatar>
               </>
             }
@@ -83,27 +112,7 @@ export default function MainLayout() {
             backgroundColor: "var(--semi-color-bg-0)",
           }}
         >
-          <Breadcrumb
-            style={{
-              marginBottom: "24px",
-            }}
-            routes={[
-              "首页",
-              "当这个页面标题很长时需要省略",
-              "上一页",
-              "详情页",
-            ]}
-          />
-          <div
-            style={{
-              borderRadius: "10px",
-              border: "1px solid var(--semi-color-border)",
-              height: "376px",
-              padding: "32px",
-            }}
-          >
-            <Outlet />
-          </div>
+          <Outlet />
         </Content>
         <Footer
           style={{

@@ -1,4 +1,4 @@
-import request from "../libs/request";
+import request from "@/libs/request";
 import type { CommonResponse, ListReq } from "./common";
 import type { Role } from "./role";
 
