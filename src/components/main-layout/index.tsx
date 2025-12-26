@@ -117,7 +117,7 @@ export default function MainLayout() {
                     <Dropdown.Menu>
                       <Dropdown.Item>
                         <div className="flex items-center gap-4">
-                          <Avatar color="blue" size="small">
+                          <Avatar color="violet" size="small">
                             FC
                           </Avatar>
                           <div>
@@ -140,7 +140,7 @@ export default function MainLayout() {
                   }
                 >
                   <div>
-                    <Avatar color="blue" size="small">
+                    <Avatar color="violet" size="small">
                       FC
                     </Avatar>
                   </div>

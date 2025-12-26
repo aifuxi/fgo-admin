@@ -3,6 +3,7 @@ import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import path from "path";
 import { fileURLToPath } from "url"; // 导入 ES 模块的路径解析方法
+import semiThemePlugin from "./src/semi-theme-plugin";
 
 // 1. 生成当前文件的绝对路径（替代 __dirname）
 const __filename = fileURLToPath(import.meta.url);
@@ -28,6 +29,9 @@ export default defineConfig(({ mode }) => {
       }),
 
       tailwindcss(),
+      semiThemePlugin({
+        theme: "@semi-bot/semi-theme-fgo",
+      }),
     ],
 
     server: {
