@@ -10,16 +10,18 @@ import {
   IconBell,
   IconHelpCircle,
   IconHome,
-  IconHistogram,
-  IconLive,
   IconSemiLogo,
   IconExit,
   IconUser,
+  IconHash,
+  IconFolderOpen,
+  IconArticle,
+  IconList,
+  IconEdit,
 } from "@douyinfe/semi-icons";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { ROUTES } from "@/constants/route";
-import { useState } from "react";
-import { useMount } from "ahooks";
+import { useEffect, useState } from "react";
 
 import LogoutConfirmModal from "./logout-confirm-modal";
 import NiceModal from "@ebay/nice-modal-react";
@@ -32,12 +34,10 @@ export default function MainLayout() {
 
   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
 
-  console.log("selectedKeys", selectedKeys);
-  console.log("navigation.location?.pathname", location.pathname);
-
-  useMount(() => {
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setSelectedKeys([location.pathname ?? ROUTES.Home.href]);
-  });
+  }, [location.pathname]);
 
   return (
     <Layout
@@ -54,48 +54,43 @@ export default function MainLayout() {
               text: ROUTES.Home.name,
               icon: <IconHome size="large" />,
               onClick: () => {
-                setSelectedKeys([ROUTES.Home.href]);
                 navigate(ROUTES.Home.href);
               },
             },
             {
               itemKey: ROUTES.Category.href,
               text: ROUTES.Category.name,
-              icon: <IconHistogram size="large" />,
+              icon: <IconFolderOpen size="large" />,
               onClick: () => {
-                setSelectedKeys([ROUTES.Category.href]);
                 navigate(ROUTES.Category.href);
               },
             },
             {
               itemKey: ROUTES.Tag.href,
               text: ROUTES.Tag.name,
-              icon: <IconLive size="large" />,
+              icon: <IconHash size="large" />,
               onClick: () => {
-                setSelectedKeys([ROUTES.Tag.href]);
                 navigate(ROUTES.Tag.href);
               },
             },
             {
               itemKey: ROUTES.Blog.href,
               text: ROUTES.Blog.name,
-              icon: <IconLive size="large" />,
+              icon: <IconArticle size="large" />,
               items: [
                 {
                   itemKey: ROUTES.BlogList.href,
                   text: ROUTES.BlogList.name,
-                  icon: <IconLive size="large" />,
+                  icon: <IconList size="large" />,
                   onClick: () => {
-                    setSelectedKeys([ROUTES.BlogList.href]);
                     navigate(ROUTES.BlogList.href);
                   },
                 },
                 {
                   itemKey: ROUTES.BlogCreate.href,
                   text: ROUTES.BlogCreate.name,
-                  icon: <IconLive size="large" />,
+                  icon: <IconEdit size="large" />,
                   onClick: () => {
-                    setSelectedKeys([ROUTES.BlogCreate.href]);
                     navigate(ROUTES.BlogCreate.href);
                   },
                 },

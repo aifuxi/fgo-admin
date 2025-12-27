@@ -9,15 +9,15 @@ export const ROUTES = {
   },
   Category: {
     href: "/category",
-    name: "博客分类",
+    name: "分类管理",
   },
   Tag: {
     href: "/tag",
-    name: "博客标签",
+    name: "标签管理",
   },
   Blog: {
     href: "/blog",
-    name: "博客",
+    name: "博客管理",
   },
   BlogList: {
     href: "/blog/list",
