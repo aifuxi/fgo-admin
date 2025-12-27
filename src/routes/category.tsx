@@ -17,11 +17,15 @@ import {
 } from "@/api/category";
 import NiceModal from "@ebay/nice-modal-react";
 import CreateCategoryModal from "@/features/category/components/create-category-modal";
-import type { ColumnProps } from "@douyinfe/semi-ui-19/lib/es/table";
 import { useRef } from "react";
-import type { FormApi } from "@douyinfe/semi-ui-19/lib/es/form";
 import { toModifiedISO8601 } from "@/libs/date";
 import DeleteCategoryModal from "@/features/category/components/delete-category-modal";
+import { isNumber } from "es-toolkit/compat";
+import type {
+  SemiFormApi,
+  SemiTableColumnProps,
+  SemiTableOnChange,
+} from "@/types/semi";
 
 type FormValues = Pick<CategoryListReq, "name" | "slug">;
 
@@ -31,13 +35,20 @@ export default function Category() {
     pageSize: 10,
   });
 
-  const formRef = useRef<FormApi<FormValues>>(null);
+  const formRef = useRef<SemiFormApi<FormValues>>(null);
 
   const { data, loading, refresh } = useRequest(() => getCategoryList(req), {
-    refreshDeps: [req.page, req.pageSize, req.name, req.slug],
+    refreshDeps: [
+      req.page,
+      req.pageSize,
+      req.name,
+      req.slug,
+      req.sortBy,
+      req.order,
+    ],
   });
 
-  const columns: ColumnProps<Category>[] = [
+  const columns: SemiTableColumnProps<Category>[] = [
     {
       title: "分类名称",
       width: 200,
@@ -60,12 +71,28 @@ export default function Category() {
       title: "创建时间",
       width: 200,
       ellipsis: true,
+      dataIndex: "createdAt",
+      sorter: true,
+      sortOrder:
+        req.sortBy === "createdAt"
+          ? req.order === "asc"
+            ? "ascend"
+            : "descend"
+          : false,
       render: (_, record) => toModifiedISO8601(record.createdAt),
     },
     {
       title: "更新时间",
       width: 200,
       ellipsis: true,
+      dataIndex: "updatedAt",
+      sorter: true,
+      sortOrder:
+        req.sortBy === "updatedAt"
+          ? req.order === "asc"
+            ? "ascend"
+            : "descend"
+          : false,
       render: (_, record) => toModifiedISO8601(record.updatedAt),
     },
     {
@@ -113,6 +140,42 @@ export default function Category() {
 
   const handleReset = () => {
     formRef.current?.reset();
+  };
+
+  const handleTableChange: SemiTableOnChange = ({ pagination, sorter }) => {
+    setReq((prev) => {
+      const next = { ...prev };
+
+      if (pagination) {
+        const { currentPage, pageSize } = pagination;
+        if (pageSize && pageSize !== prev.pageSize) {
+          next.pageSize = pageSize;
+          next.page = 1;
+        } else if (isNumber(currentPage) && currentPage !== prev.page) {
+          next.page = currentPage;
+        }
+      }
+
+      if (sorter && !Array.isArray(sorter)) {
+        const singleSorter = sorter;
+
+        if (!singleSorter.sortOrder) {
+          next.sortBy = undefined;
+          next.order = undefined;
+        } else {
+          const field = (singleSorter.sortField ??
+            singleSorter.dataIndex) as string;
+
+          if (field === "createdAt" || field === "updatedAt") {
+            next.sortBy = field;
+            next.order = singleSorter.sortOrder === "ascend" ? "asc" : "desc";
+            next.page = 1;
+          }
+        }
+      }
+
+      return next;
+    });
   };
 
   return (
@@ -207,6 +270,7 @@ export default function Category() {
 
         <div className="flex flex-col">
           <Table
+            rowKey={(r) => r?.id ?? ""}
             columns={columns}
             loading={loading}
             dataSource={data?.data?.lists ?? []}
@@ -215,15 +279,8 @@ export default function Category() {
               pageSize: req.pageSize,
               currentPage: req.page,
               showSizeChanger: true,
-              onChange: (page, pageSize) => {
-                setReq((prev) => {
-                  if (prev.pageSize !== pageSize) {
-                    return { ...prev, pageSize, page: 1 };
-                  }
-                  return { ...prev, page };
-                });
-              },
             }}
+            onChange={handleTableChange}
           />
         </div>
       </div>

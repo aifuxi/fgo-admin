@@ -10,7 +10,7 @@ import {
 import { useRequest } from "ahooks";
 import { showSuccessToast } from "@/libs/toast";
 import { useRef } from "react";
-import type { FormApi } from "@douyinfe/semi-ui-19/lib/es/form";
+import type { SemiFormApi } from "@/types/semi";
 
 interface Props {
   onSuccess?: () => void;
@@ -20,7 +20,7 @@ interface Props {
 const CreateTagModal = NiceModal.create(({ onSuccess, tagID }: Props) => {
   const modal = NiceModal.useModal();
 
-  const formRef = useRef<FormApi<TagCreateReq>>(null);
+  const formRef = useRef<SemiFormApi<TagCreateReq>>(null);
 
   const { loading, run } = useRequest(createTag, {
     manual: true,

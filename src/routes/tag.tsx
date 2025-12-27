@@ -13,11 +13,12 @@ import { useRequest, useSetState } from "ahooks";
 import { getTagList, type Tag, type TagListReq } from "@/api/tag";
 import NiceModal from "@ebay/nice-modal-react";
 import CreateTagModal from "@/features/tag/components/create-tag-modal";
-import type { ColumnProps } from "@douyinfe/semi-ui-19/lib/es/table";
+
 import { useRef } from "react";
-import type { FormApi } from "@douyinfe/semi-ui-19/lib/es/form";
+
 import { toModifiedISO8601 } from "@/libs/date";
 import DeleteTagModal from "@/features/tag/components/delete-tag-modal";
+import type { SemiFormApi, SemiTableColumnProps } from "@/types/semi";
 
 type FormValues = Pick<TagListReq, "name" | "slug">;
 
@@ -27,13 +28,13 @@ export default function Tag() {
     pageSize: 10,
   });
 
-  const formRef = useRef<FormApi<FormValues>>(null);
+  const formRef = useRef<SemiFormApi<FormValues>>(null);
 
   const { data, loading, refresh } = useRequest(() => getTagList(req), {
     refreshDeps: [req.page, req.pageSize, req.name, req.slug],
   });
 
-  const columns: ColumnProps<Tag>[] = [
+  const columns: SemiTableColumnProps<Tag>[] = [
     {
       title: "标签名称",
       width: 200,

@@ -10,7 +10,7 @@ import {
 import { useRequest } from "ahooks";
 import { showSuccessToast } from "@/libs/toast";
 import { useRef } from "react";
-import type { FormApi } from "@douyinfe/semi-ui-19/lib/es/form";
+import type { SemiFormApi } from "@/types/semi";
 
 interface Props {
   onSuccess?: () => void;
@@ -21,7 +21,7 @@ const CreateCategoryModal = NiceModal.create(
   ({ onSuccess, categoryID }: Props) => {
     const modal = NiceModal.useModal();
 
-    const formRef = useRef<FormApi<CategoryCreateReq>>(null);
+    const formRef = useRef<SemiFormApi<CategoryCreateReq>>(null);
 
     const { loading, run } = useRequest(createCategory, {
       manual: true,
