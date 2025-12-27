@@ -20,7 +20,7 @@ export interface BlogListReq extends ListReq {
   title?: string;
   slug?: string;
   categoryID?: string;
-  tagIDs?: string[];
+  blogIDs?: string[];
 }
 
 export interface BlogListResp {
@@ -50,9 +50,9 @@ export async function getBlogList(req: BlogListReq) {
 }
 
 /** 获取博客详情 */
-export async function getBlogDetail(tagID: string) {
+export async function getBlogDetail(blogID: string) {
   const res = await request.get<CommonResponse<Blog>>(
-    `${API_BASE_PATH}/${tagID}`
+    `${API_BASE_PATH}/${blogID}`
   );
   return res.data;
 }
@@ -64,18 +64,18 @@ export async function createBlog(req: BlogCreateReq) {
 }
 
 /** 更新博客 */
-export async function updateBlog(tagID: string, req: BlogCreateReq) {
+export async function updateBlog(blogID: string, req: BlogCreateReq) {
   const res = await request.put<CommonResponse<Blog>>(
-    `${API_BASE_PATH}/${tagID}`,
+    `${API_BASE_PATH}/${blogID}`,
     req
   );
   return res.data;
 }
 
 /** 删除博客 */
-export async function deleteBlog(tagID: string) {
+export async function deleteBlog(blogID: string) {
   const res = await request.delete<CommonResponse<void>>(
-    `${API_BASE_PATH}/${tagID}`
+    `${API_BASE_PATH}/${blogID}`
   );
   return res.data;
 }

@@ -3,17 +3,14 @@ import ContentLayout from "@/components/content-layout";
 import { Button, Form, Table } from "@douyinfe/semi-ui-19";
 import {
   IconDelete,
+  IconEdit,
   IconEyeOpened,
   IconPlusCircle,
   IconRefresh2,
   IconSearch,
 } from "@douyinfe/semi-icons";
 import { useRequest, useSetState } from "ahooks";
-import {
-  getBlogList,
-  type Blog,
-  type BlogListReq,
-} from "@/api/blog";
+import { getBlogList, type Blog, type BlogListReq } from "@/api/blog";
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { toModifiedISO8601 } from "@/libs/date";
@@ -109,6 +106,14 @@ export default function BlogList() {
       render: (_, record) => {
         return (
           <div className="flex gap-4">
+            <Button
+              icon={<IconEdit />}
+              onClick={() => {
+                navigate(`${ROUTES.BlogCreate.href}?id=${record.id}`);
+              }}
+            >
+              编辑
+            </Button>
             <Button type="secondary" icon={<IconEyeOpened />}>
               查看
             </Button>
