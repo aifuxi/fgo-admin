@@ -6,22 +6,40 @@ interface Props extends React.ComponentProps<typeof Modal> {
 }
 
 export default function NiceSemiModal(props: Props) {
-  const { modal, onCancel, onOk, afterClose, children, ...rest } = props;
+  const {
+    modal,
+    onCancel,
+    onOk,
+    afterClose,
+    children,
+    keepDOM = false,
+    ...rest
+  } = props;
+
+  const handleClose = () => {
+    if (!keepDOM) {
+      modal.remove();
+    } else {
+      modal.hide();
+    }
+  };
+
   return (
     <Modal
       {...rest}
       visible={modal.visible}
+      keepDOM={keepDOM}
       onOk={(e) => {
         onOk?.(e);
-        modal.hide();
+        handleClose();
       }}
       onCancel={(e) => {
         onCancel?.(e);
-        modal.hide();
+        handleClose();
       }}
       onAfterClose={() => {
         afterClose?.();
-        modal.remove();
+        handleClose();
       }}
     >
       {children}
