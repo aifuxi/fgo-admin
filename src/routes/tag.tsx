@@ -18,7 +18,12 @@ import { useRef } from "react";
 
 import { toModifiedISO8601 } from "@/libs/date";
 import DeleteTagModal from "@/features/tag/components/delete-tag-modal";
-import type { SemiFormApi, SemiTableColumnProps } from "@/types/semi";
+import type {
+  SemiFormApi,
+  SemiTableColumnProps,
+  SemiTableOnChange,
+} from "@/types/semi";
+import { isNumber } from "es-toolkit/compat";
 
 type FormValues = Pick<TagListReq, "name" | "slug">;
 
@@ -31,7 +36,14 @@ export default function Tag() {
   const formRef = useRef<SemiFormApi<FormValues>>(null);
 
   const { data, loading, refresh } = useRequest(() => getTagList(req), {
-    refreshDeps: [req.page, req.pageSize, req.name, req.slug],
+    refreshDeps: [
+      req.page,
+      req.pageSize,
+      req.name,
+      req.slug,
+      req.sortBy,
+      req.order,
+    ],
   });
 
   const columns: SemiTableColumnProps<Tag>[] = [
@@ -57,12 +69,28 @@ export default function Tag() {
       title: "创建时间",
       width: 200,
       ellipsis: true,
+      dataIndex: "createdAt",
+      sorter: true,
+      sortOrder:
+        req.sortBy === "createdAt"
+          ? req.order === "asc"
+            ? "ascend"
+            : "descend"
+          : false,
       render: (_, record) => toModifiedISO8601(record.createdAt),
     },
     {
       title: "更新时间",
       width: 200,
       ellipsis: true,
+      dataIndex: "updatedAt",
+      sorter: true,
+      sortOrder:
+        req.sortBy === "updatedAt"
+          ? req.order === "asc"
+            ? "ascend"
+            : "descend"
+          : false,
       render: (_, record) => toModifiedISO8601(record.updatedAt),
     },
     {
@@ -110,6 +138,42 @@ export default function Tag() {
 
   const handleReset = () => {
     formRef.current?.reset();
+  };
+
+  const handleTableChange: SemiTableOnChange = ({ pagination, sorter }) => {
+    setReq((prev) => {
+      const next = { ...prev };
+
+      if (pagination) {
+        const { currentPage, pageSize } = pagination;
+        if (pageSize && pageSize !== prev.pageSize) {
+          next.pageSize = pageSize;
+          next.page = 1;
+        } else if (isNumber(currentPage) && currentPage !== prev.page) {
+          next.page = currentPage;
+        }
+      }
+
+      if (sorter && !Array.isArray(sorter)) {
+        const singleSorter = sorter;
+
+        if (!singleSorter.sortOrder) {
+          next.sortBy = undefined;
+          next.order = undefined;
+        } else {
+          const field = (singleSorter.sortField ??
+            singleSorter.dataIndex) as string;
+
+          if (field === "createdAt" || field === "updatedAt") {
+            next.sortBy = field;
+            next.order = singleSorter.sortOrder === "ascend" ? "asc" : "desc";
+            next.page = 1;
+          }
+        }
+      }
+
+      return next;
+    });
   };
 
   return (
@@ -212,15 +276,8 @@ export default function Tag() {
               pageSize: req.pageSize,
               currentPage: req.page,
               showSizeChanger: true,
-              onChange: (page, pageSize) => {
-                setReq((prev) => {
-                  if (prev.pageSize !== pageSize) {
-                    return { ...prev, pageSize, page: 1 };
-                  }
-                  return { ...prev, page };
-                });
-              },
             }}
+            onChange={handleTableChange}
           />
         </div>
       </div>
