@@ -12,12 +12,12 @@ import {
 import { useRequest, useSetState } from "ahooks";
 import { getTagList, type Tag, type TagListReq } from "@/api/tag";
 import NiceModal from "@ebay/nice-modal-react";
-import CreateTagModal from "@/features/tag/components/create-tag-modal";
+import TagCreateModal from "@/features/tag/components/tag-create-modal";
 
 import { useRef } from "react";
 
 import { toModifiedISO8601 } from "@/libs/date";
-import DeleteTagModal from "@/features/tag/components/delete-tag-modal";
+import TagDeleteModal from "@/features/tag/components/tag-delete-modal";
 import type {
   SemiFormApi,
   SemiTableColumnProps,
@@ -103,7 +103,7 @@ export default function Tag() {
             <Button
               icon={<IconEdit />}
               onClick={() => {
-                NiceModal.show(CreateTagModal, {
+                NiceModal.show(TagCreateModal, {
                   tagID: record.id,
                   onSuccess: refresh,
                 });
@@ -118,7 +118,7 @@ export default function Tag() {
               icon={<IconDelete />}
               type="danger"
               onClick={() => {
-                NiceModal.show(DeleteTagModal, {
+                NiceModal.show(TagDeleteModal, {
                   tagID: record.id,
                   onSuccess: refresh,
                 });
@@ -257,7 +257,7 @@ export default function Tag() {
             theme="solid"
             icon={<IconPlusCircle />}
             onClick={() => {
-              NiceModal.show(CreateTagModal, {
+              NiceModal.show(TagCreateModal, {
                 onSuccess: refresh,
               });
             }}

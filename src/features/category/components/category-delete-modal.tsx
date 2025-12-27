@@ -9,7 +9,7 @@ interface Props {
   categoryID: string;
 }
 
-const DeleteCategoryModal = NiceModal.create(
+const CategoryDeleteModal = NiceModal.create(
   ({ onSuccess, categoryID }: Props) => {
     const modal = NiceModal.useModal();
 
@@ -40,4 +40,4 @@ const DeleteCategoryModal = NiceModal.create(
   }
 );
 
-export default DeleteCategoryModal;
+export default CategoryDeleteModal;

@@ -15,4 +15,16 @@ export const ROUTES = {
     href: "/tag",
     name: "博客标签",
   },
+  Blog: {
+    href: "/blog",
+    name: "博客",
+  },
+  BlogList: {
+    href: "/blog/list",
+    name: "博客列表",
+  },
+  BlogCreate: {
+    href: "/blog/create",
+    name: "创建博客",
+  },
 } as const;

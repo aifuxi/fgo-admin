@@ -16,10 +16,10 @@ import {
   type CategoryListReq,
 } from "@/api/category";
 import NiceModal from "@ebay/nice-modal-react";
-import CreateCategoryModal from "@/features/category/components/create-category-modal";
+import CategoryCreateModal from "@/features/category/components/category-create-modal";
 import { useRef } from "react";
 import { toModifiedISO8601 } from "@/libs/date";
-import DeleteCategoryModal from "@/features/category/components/delete-category-modal";
+import CategoryDeleteModal from "@/features/category/components/category-delete-modal";
 import { isNumber } from "es-toolkit/compat";
 import type {
   SemiFormApi,
@@ -105,7 +105,7 @@ export default function Category() {
             <Button
               icon={<IconEdit />}
               onClick={() => {
-                NiceModal.show(CreateCategoryModal, {
+                NiceModal.show(CategoryCreateModal, {
                   categoryID: record.id,
                   onSuccess: refresh,
                 });
@@ -120,7 +120,7 @@ export default function Category() {
               icon={<IconDelete />}
               type="danger"
               onClick={() => {
-                NiceModal.show(DeleteCategoryModal, {
+                NiceModal.show(CategoryDeleteModal, {
                   categoryID: record.id,
                   onSuccess: refresh,
                 });
@@ -259,7 +259,7 @@ export default function Category() {
             theme="solid"
             icon={<IconPlusCircle />}
             onClick={() => {
-              NiceModal.show(CreateCategoryModal, {
+              NiceModal.show(CategoryCreateModal, {
                 onSuccess: refresh,
               });
             }}

@@ -9,7 +9,7 @@ interface Props {
   tagID: string;
 }
 
-const DeleteTagModal = NiceModal.create(({ onSuccess, tagID }: Props) => {
+const TagDeleteModal = NiceModal.create(({ onSuccess, tagID }: Props) => {
   const modal = NiceModal.useModal();
 
   const { loading, run } = useRequest(deleteTag, {
@@ -38,5 +38,4 @@ const DeleteTagModal = NiceModal.create(({ onSuccess, tagID }: Props) => {
   );
 });
 
-export default DeleteTagModal;
-
+export default TagDeleteModal;

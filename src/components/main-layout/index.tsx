@@ -76,6 +76,31 @@ export default function MainLayout() {
                 navigate(ROUTES.Tag.href);
               },
             },
+            {
+              itemKey: ROUTES.Blog.href,
+              text: ROUTES.Blog.name,
+              icon: <IconLive size="large" />,
+              items: [
+                {
+                  itemKey: ROUTES.BlogList.href,
+                  text: ROUTES.BlogList.name,
+                  icon: <IconLive size="large" />,
+                  onClick: () => {
+                    setSelectedKeys([ROUTES.BlogList.href]);
+                    navigate(ROUTES.BlogList.href);
+                  },
+                },
+                {
+                  itemKey: ROUTES.BlogCreate.href,
+                  text: ROUTES.BlogCreate.name,
+                  icon: <IconLive size="large" />,
+                  onClick: () => {
+                    setSelectedKeys([ROUTES.BlogCreate.href]);
+                    navigate(ROUTES.BlogCreate.href);
+                  },
+                },
+              ],
+            },
           ]}
           header={{
             logo: <IconSemiLogo style={{ fontSize: 36 }} />,

@@ -5,14 +5,17 @@ import Index from "@/routes";
 import Category from "@/routes/category";
 import Tag from "@/routes/tag";
 import NiceModal from "@ebay/nice-modal-react";
+import BlogList from "@/routes/blog/blog-list";
+import BlogCreate from "@/routes/blog/blog-create";
+import { ROUTES } from "@/constants/route";
 
 const router = createBrowserRouter([
   {
-    path: "/login",
+    path: ROUTES.Login.href,
     Component: Login,
   },
   {
-    path: "/",
+    path: ROUTES.Home.href,
     element: (
       <NiceModal.Provider>
         <MainLayout />
@@ -24,12 +27,20 @@ const router = createBrowserRouter([
         Component: Index,
       },
       {
-        path: "/category",
+        path: ROUTES.Category.href,
         Component: Category,
       },
       {
-        path: "/tag",
+        path: ROUTES.Tag.href,
         Component: Tag,
+      },
+      {
+        path: ROUTES.BlogList.href,
+        Component: BlogList,
+      },
+      {
+        path: ROUTES.BlogCreate.href,
+        Component: BlogCreate,
       },
     ],
   },

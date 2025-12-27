@@ -17,7 +17,7 @@ interface Props {
   tagID?: string;
 }
 
-const CreateTagModal = NiceModal.create(({ onSuccess, tagID }: Props) => {
+const TagCreateModal = NiceModal.create(({ onSuccess, tagID }: Props) => {
   const modal = NiceModal.useModal();
 
   const formRef = useRef<SemiFormApi<TagCreateReq>>(null);
@@ -117,4 +117,4 @@ const CreateTagModal = NiceModal.create(({ onSuccess, tagID }: Props) => {
   );
 });
 
-export default CreateTagModal;
+export default TagCreateModal;

@@ -17,7 +17,7 @@ interface Props {
   categoryID?: string;
 }
 
-const CreateCategoryModal = NiceModal.create(
+const CategoryCreateModal = NiceModal.create(
   ({ onSuccess, categoryID }: Props) => {
     const modal = NiceModal.useModal();
 
@@ -125,4 +125,4 @@ const CreateCategoryModal = NiceModal.create(
   }
 );
 
-export default CreateCategoryModal;
+export default CategoryCreateModal;
