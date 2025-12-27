@@ -1,5 +1,6 @@
 import ContentLayout from "@/components/content-layout";
 import { ROUTES } from "@/constants/route";
+import BlogCreateForm from "@/features/blog/components/blog-create-form";
 
 export default function BlogCreate() {
   return (
@@ -20,7 +21,7 @@ export default function BlogCreate() {
         },
       ]}
     >
-      新建博客
+      <BlogCreateForm />
     </ContentLayout>
   );
 }
