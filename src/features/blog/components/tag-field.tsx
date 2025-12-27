@@ -1,6 +1,6 @@
-import { Form } from "@douyinfe/semi-ui-19";
+import { Form, useFieldApi } from "@douyinfe/semi-ui-19";
 import { useMount, useRequest } from "ahooks";
-import { getTagList } from "@/api/tag";
+import { getTagDetail, getTagList } from "@/api/tag";
 import { useState } from "react";
 
 interface OptionItemType {
@@ -14,7 +14,26 @@ type TagFieldProps = Omit<
 >;
 
 export function TagField(props: TagFieldProps) {
-  const [list, setList] = useState<OptionItemType[]>([]);
+  const fieldApi = useFieldApi(props.field);
+  const [options, setOptions] = useState<OptionItemType[]>([]);
+  const [tagIDs, setTagIDs] = useState<string[]>([]);
+
+  const { loading: detailLoading } = useRequest(
+    () => Promise.all(tagIDs.map((id) => getTagDetail(id))),
+    {
+      ready: Boolean(tagIDs?.length),
+      onSuccess(resp) {
+        setOptions(
+          resp.map(
+            ({ data }): OptionItemType => ({
+              label: data?.name,
+              value: data?.id,
+            })
+          )
+        );
+      },
+    }
+  );
 
   const { loading, run } = useRequest(
     (v: string) =>
@@ -28,13 +47,13 @@ export function TagField(props: TagFieldProps) {
       debounceWait: 500,
       onSuccess(resp) {
         if (resp?.data?.lists) {
-          setList(
+          setOptions(
             resp.data.lists.map(
               (el): OptionItemType => ({ label: el.name, value: el.id })
             )
           );
         } else {
-          setList([]);
+          setOptions([]);
         }
       },
     }
@@ -42,6 +61,14 @@ export function TagField(props: TagFieldProps) {
 
   useMount(() => {
     run("");
+    setTimeout(() => {
+      const tagIDs = props.multiple
+        ? (fieldApi?.getValue() as string[])
+        : [fieldApi?.getValue()].filter(Boolean);
+      if (tagIDs?.length) {
+        setTagIDs(tagIDs);
+      }
+    }, 1000);
   });
 
   const handleSearch = (inputValue: string) => {
@@ -55,8 +82,8 @@ export function TagField(props: TagFieldProps) {
       filter
       remote
       onSearch={handleSearch}
-      optionList={list}
-      loading={loading}
+      optionList={options}
+      loading={loading || detailLoading}
       emptyContent={null}
       {...props}
     ></Form.Select>

@@ -1,7 +1,6 @@
-import { debounce } from "es-toolkit";
-import { Form } from "@douyinfe/semi-ui-19";
+import { Form, useFieldApi } from "@douyinfe/semi-ui-19";
 import { useMount, useRequest } from "ahooks";
-import { getCategoryList } from "@/api/category";
+import { getCategoryDetail, getCategoryList } from "@/api/category";
 import { useState } from "react";
 
 interface OptionItemType {
@@ -15,7 +14,27 @@ type CategoryFieldProps = Omit<
 >;
 
 export function CategoryField(props: CategoryFieldProps) {
-  const [list, setList] = useState<OptionItemType[]>([]);
+  const fieldApi = useFieldApi(props.field);
+  const [options, setOptions] = useState<OptionItemType[]>([]);
+  const [categoryIDs, setCategoryIDs] = useState<string[]>([]);
+
+  const { loading: detailLoading } = useRequest(
+    () => Promise.all(categoryIDs.map((id) => getCategoryDetail(id))),
+    {
+      ready: Boolean(categoryIDs?.length),
+      debounceWait: 500,
+      onSuccess(resp) {
+        setOptions(
+          resp.map(
+            (el): OptionItemType => ({
+              label: el?.data?.name,
+              value: el?.data?.id,
+            })
+          )
+        );
+      },
+    }
+  );
 
   const { loading, run } = useRequest(
     (v: string) =>
@@ -28,13 +47,13 @@ export function CategoryField(props: CategoryFieldProps) {
       manual: true,
       onSuccess(resp) {
         if (resp?.data?.lists) {
-          setList(
+          setOptions(
             resp.data.lists.map(
               (el): OptionItemType => ({ label: el.name, value: el.id })
             )
           );
         } else {
-          setList([]);
+          setOptions([]);
         }
       },
     }
@@ -42,6 +61,14 @@ export function CategoryField(props: CategoryFieldProps) {
 
   useMount(() => {
     run("");
+    setTimeout(() => {
+      const categoryIDs = props.multiple
+        ? (fieldApi.getValue() as string[])
+        : [fieldApi.getValue() as string].filter(Boolean);
+      if (categoryIDs?.length) {
+        setCategoryIDs(categoryIDs);
+      }
+    }, 1000);
   });
 
   const handleSearch = (inputValue: string) => {
@@ -55,9 +82,9 @@ export function CategoryField(props: CategoryFieldProps) {
       className="w-full"
       filter
       remote
-      onSearch={debounce(handleSearch, 1000)}
-      optionList={list}
-      loading={loading}
+      onSearch={handleSearch}
+      optionList={options}
+      loading={loading || detailLoading}
       emptyContent={null}
       {...props}
     ></Form.Select>
