@@ -64,3 +64,5 @@ body[theme-mode="dark"] ::-webkit-scrollbar-thumb:hover {
 body[theme-mode="dark"] * {
   scrollbar-color: #666666 #2c2c2c; /* 暗黑模式：滑块色 轨道色 */
 }
+
+@import "./styles/github-markdown.css";

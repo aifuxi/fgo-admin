@@ -3,6 +3,8 @@ import PubSub from "pubsub-js";
 
 import "./index.css";
 
+import "bytemd/dist/index.css";
+
 import { TOPIC_API_ERROR } from "@/constants/event-topics";
 import { ConfigProvider, Toast } from "@douyinfe/semi-ui-19";
 import { RouterProvider } from "react-router-dom";

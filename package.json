@@ -10,6 +10,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@bytemd/plugin-breaks": "^1.22.0",
+    "@bytemd/plugin-gfm": "^1.22.0",
+    "@bytemd/plugin-highlight": "^1.22.0",
+    "@bytemd/react": "^1.22.0",
     "@douyinfe/semi-icons": "^2.89.1",
     "@douyinfe/semi-icons-lab": "^2.89.1",
     "@douyinfe/semi-illustrations": "^2.89.1",
@@ -19,6 +23,7 @@
     "@tailwindcss/vite": "^4.1.18",
     "ahooks": "^3.9.6",
     "axios": "^1.13.2",
+    "bytemd": "^1.22.0",
     "date-fns": "^4.1.0",
     "es-toolkit": "^1.43.0",
     "pubsub-js": "^1.9.5",

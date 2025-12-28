@@ -15,6 +15,7 @@ import NiceModal from "@ebay/nice-modal-react";
 import BlogCreatedModal from "./blog-created-modal";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "@/constants/route";
+import BytemdField from "@/components/bytemd-field";
 
 interface Props {
   id?: string;
@@ -128,13 +129,13 @@ export default function BlogCreateForm({ id }: Props) {
           rules={[{ required: true, message: "请输入别名" }]}
         ></Form.Switch>
 
-        <Form.TextArea
+        <BytemdField
           field="content"
           label="内容"
           showClear
           placeholder="请输入内容"
           rules={[{ required: true, message: "请输入内容" }]}
-        ></Form.TextArea>
+        ></BytemdField>
 
         <Form.Slot noLabel>
           <Button

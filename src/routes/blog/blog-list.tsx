@@ -101,7 +101,7 @@ export default function BlogList() {
     },
     {
       title: "操作",
-      width: 260,
+      width: 280,
       fixed: "right",
       render: (_, record) => {
         return (
