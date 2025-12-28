@@ -3,6 +3,8 @@ import breaks from "@bytemd/plugin-breaks";
 import highlight from "@bytemd/plugin-highlight";
 import { Editor } from "@bytemd/react";
 import { withField } from "@douyinfe/semi-ui-19";
+import { uploadFile } from "@/api/upload";
+import { showErrorToast, showSuccessToast } from "@/libs/toast";
 
 const plugins = [gfm(), breaks(), highlight()];
 
@@ -22,6 +24,24 @@ function BytemdFieldInner(props: BytemdFieldProps) {
       plugins={plugins}
       onChange={onChange}
       {...rest}
+      uploadImages={async (files) => {
+        try {
+          const promises = files.map(async (file) => {
+            const res = await uploadFile(file);
+            if (res.url && res.name) {
+              showSuccessToast(`「${res.name}」上传成功`);
+              return [{ url: res.url, name: res.name }];
+            } else {
+              showErrorToast(`「${file.name}」上传失败`);
+            }
+            return [];
+          });
+          const results = await Promise.all(promises);
+          return results.flat();
+        } catch (_) {
+          return [];
+        }
+      }}
     />
   );
 }
