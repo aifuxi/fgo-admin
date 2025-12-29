@@ -26,6 +26,6 @@
   },
   "include": [
     "vite.config.ts",
-    "./src/semi-theme-plugin.ts"
+    "./src/semi-theme-plugin.ts",
   ]
 }

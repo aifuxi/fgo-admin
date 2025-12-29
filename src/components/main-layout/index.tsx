@@ -40,11 +40,8 @@ export default function MainLayout() {
   }, [location.pathname]);
 
   return (
-    <Layout
-      className="h-full"
-      style={{ border: "1px solid var(--semi-color-border)" }}
-    >
-      <Sider style={{ backgroundColor: "var(--semi-color-bg-1)" }}>
+    <Layout className="h-full">
+      <Sider className="bg-semi-bg-1">
         <Nav
           style={{ maxWidth: 220, height: "100%" }}
           selectedKeys={selectedKeys}
@@ -107,10 +104,7 @@ export default function MainLayout() {
         />
       </Sider>
       <Layout className="relative">
-        <Header
-          className="sticky top-0 z-10"
-          style={{ backgroundColor: "var(--semi-color-bg-1)" }}
-        >
+        <Header className="sticky top-0 z-10 bg-semi-bg-1">
           <Nav
             mode="horizontal"
             footer={
@@ -118,18 +112,12 @@ export default function MainLayout() {
                 <Button
                   theme="borderless"
                   icon={<IconBell size="large" />}
-                  style={{
-                    color: "var(--semi-color-text-2)",
-                    marginRight: "12px",
-                  }}
+                  className="text-semi-text-2 mr-3"
                 />
                 <Button
                   theme="borderless"
                   icon={<IconHelpCircle size="large" />}
-                  style={{
-                    color: "var(--semi-color-text-2)",
-                    marginRight: "12px",
-                  }}
+                  className="text-semi-text-2 mr-3"
                 />
                 <Dropdown
                   position="bottomLeft"
@@ -169,33 +157,15 @@ export default function MainLayout() {
             }
           ></Nav>
         </Header>
-        <Content
-          style={{
-            padding: "24px",
-            backgroundColor: "var(--semi-color-bg-0)",
-          }}
-        >
+        <Content className="p-6 bg-semi-bg-0">
           <Outlet />
         </Content>
-        <Footer
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            padding: "20px",
-            color: "var(--semi-color-text-2)",
-            backgroundColor: "rgba(var(--semi-grey-0), 1)",
-          }}
-        >
-          <span
-            style={{
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
+        <Footer className="flex justify-between p-5 text-semi-text-2 bg-[rgba(var(--semi-grey-0),1)]">
+          <span className="flex items-center">
             <span>Copyright © 2025 fgo. All Rights Reserved. </span>
           </span>
           <span>
-            <span style={{ marginRight: "24px" }}>平台客服</span>
+            <span className="mr-6">平台客服</span>
             <span>反馈建议</span>
           </span>
         </Footer>
