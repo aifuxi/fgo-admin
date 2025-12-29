@@ -5,6 +5,7 @@ export interface Tag extends CommonModel {
   name: string;
   slug: string;
   description: string;
+  blogCount: number;
 }
 
 export interface TagListReq extends ListReq {

@@ -66,6 +66,12 @@ export default function Tag() {
       render: (_, record) => record.description,
     },
     {
+      title: "博客数量",
+      width: 100,
+      ellipsis: true,
+      render: (_, record) => record.blogCount,
+    },
+    {
       title: "创建时间",
       width: 200,
       ellipsis: true,

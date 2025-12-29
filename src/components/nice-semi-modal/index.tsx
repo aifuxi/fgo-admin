@@ -31,7 +31,6 @@ export default function NiceSemiModal(props: Props) {
       keepDOM={keepDOM}
       onOk={(e) => {
         onOk?.(e);
-        handleClose();
       }}
       onCancel={(e) => {
         onCancel?.(e);

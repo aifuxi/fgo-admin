@@ -16,6 +16,7 @@ const CategoryDeleteModal = NiceModal.create(
     const { loading, run } = useRequest(deleteCategory, {
       manual: true,
       onSuccess() {
+        modal.remove();
         onSuccess?.();
         showSuccessToast("删除成功");
       },

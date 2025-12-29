@@ -5,6 +5,7 @@ export interface Category extends CommonModel {
   name: string;
   slug: string;
   description: string;
+  blogCount: number;
 }
 
 export interface CategoryListReq extends ListReq {

@@ -16,6 +16,7 @@ import BlogCreatedModal from "./blog-created-modal";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "@/constants/route";
 import BytemdField from "@/components/bytemd-field";
+import { slugValidatorRule } from "@/utils/validator";
 
 interface Props {
   id?: string;
@@ -99,7 +100,7 @@ export default function BlogCreateForm({ id }: Props) {
           showClear
           prefix="https://fuxiaochen.com/blog/"
           placeholder="请输入别名"
-          rules={[{ required: true, message: "请输入别名" }]}
+          rules={[{ required: true, message: "请输入别名" }, slugValidatorRule]}
           extraText="「别名」是在 URL 中使用的别称，仅支持小写字母、数字和短横线(-)"
         ></Form.Input>
         <Form.TextArea

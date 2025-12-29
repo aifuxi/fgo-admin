@@ -23,12 +23,13 @@ const BlogCreatedModal = NiceModal.create(({ onOK }: Props) => {
       okText="继续创建"
       onOk={() => {
         onOK?.();
+        modal.remove();
       }}
       onCancel={(_) => {
         navigate(ROUTES.BlogList.href);
       }}
     >
-      博客创建成功，是否继续创建其他博客？
+      博客创建成功，是否继续创建新博客？
     </NiceSemiModal>
   );
 });

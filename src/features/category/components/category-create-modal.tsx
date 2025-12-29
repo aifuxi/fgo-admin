@@ -11,6 +11,7 @@ import { useRequest } from "ahooks";
 import { showSuccessToast } from "@/libs/toast";
 import { useRef } from "react";
 import type { SemiFormApi } from "@/types/semi";
+import { slugValidatorRule } from "@/utils/validator";
 
 interface Props {
   onSuccess?: () => void;
@@ -26,6 +27,7 @@ const CategoryCreateModal = NiceModal.create(
     const { loading, run } = useRequest(createCategory, {
       manual: true,
       onSuccess() {
+        modal.remove();
         onSuccess?.();
         showSuccessToast("创建成功");
       },
@@ -36,6 +38,7 @@ const CategoryCreateModal = NiceModal.create(
       {
         manual: true,
         onSuccess() {
+          modal.remove();
           onSuccess?.();
           showSuccessToast("更新成功");
         },
@@ -108,7 +111,10 @@ const CategoryCreateModal = NiceModal.create(
               size="large"
               showClear
               placeholder="请输入分类别名"
-              rules={[{ required: true, message: "请输入分类别名" }]}
+              rules={[
+                { required: true, message: "请输入分类别名" },
+                slugValidatorRule,
+              ]}
               extraText="「别名」是在 URL 中使用的别称，仅支持小写字母、数字和短横线(-)"
             ></Form.Input>
             <Form.TextArea

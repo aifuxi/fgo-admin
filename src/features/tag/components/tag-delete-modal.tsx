@@ -15,6 +15,7 @@ const TagDeleteModal = NiceModal.create(({ onSuccess, tagID }: Props) => {
   const { loading, run } = useRequest(deleteTag, {
     manual: true,
     onSuccess() {
+      modal.remove();
       onSuccess?.();
       showSuccessToast("删除成功");
     },
