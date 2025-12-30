@@ -9,6 +9,8 @@ import NiceModal from "@ebay/nice-modal-react";
 import BlogList from "@/routes/blog/blog-list";
 import BlogCreate from "@/routes/blog/blog-create";
 import { ROUTES } from "@/constants/route";
+import ProtectRoute from "./components/protect-route";
+import { PERMISSION_CODES } from "./constants/permission-codes";
 
 const router = createBrowserRouter([
   {
@@ -25,27 +27,64 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        Component: Index,
+        element: <Index />,
       },
       {
         path: ROUTES.Category.href,
-        Component: Category,
+        element: (
+          <ProtectRoute
+            requireSomePermissionCodes={[
+              PERMISSION_CODES.PermissionCategoryList,
+            ]}
+          >
+            <Category />
+          </ProtectRoute>
+        ),
       },
       {
         path: ROUTES.Tag.href,
-        Component: Tag,
+        element: (
+          <ProtectRoute
+            requireSomePermissionCodes={[PERMISSION_CODES.PermissionTagList]}
+          >
+            <Tag />
+          </ProtectRoute>
+        ),
       },
       {
         path: ROUTES.User.href,
-        Component: User,
+        element: (
+          <ProtectRoute
+            requireAllPermissionCodes={[PERMISSION_CODES.PermissionAdminAll]}
+          >
+            <User />
+          </ProtectRoute>
+        ),
       },
       {
         path: ROUTES.BlogList.href,
-        Component: BlogList,
+        element: (
+          <ProtectRoute
+            requireSomePermissionCodes={[PERMISSION_CODES.PermissionBlogList]}
+          >
+            <BlogList />
+          </ProtectRoute>
+        ),
       },
       {
         path: ROUTES.BlogCreate.href,
-        Component: BlogCreate,
+        element: (
+          <ProtectRoute
+            requireSomePermissionCodes={[
+              PERMISSION_CODES.PermissionBlogCreate,
+              PERMISSION_CODES.PermissionBlogUpdate,
+              PERMISSION_CODES.PermissionBlogList,
+              PERMISSION_CODES.PermissionBlogView,
+            ]}
+          >
+            <BlogCreate />
+          </ProtectRoute>
+        ),
       },
     ],
   },

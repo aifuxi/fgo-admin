@@ -7,10 +7,12 @@ import { useNavigate } from "react-router-dom";
 import { ROUTES } from "@/constants/route";
 import { useRequest } from "ahooks";
 import { logout } from "@/api/user";
+import useUserStore from "@/stores/use-user-store";
 
 const LogoutConfirmModal = NiceModal.create(() => {
   const modal = NiceModal.useModal();
   const navigate = useNavigate();
+  const clearUserInfo = useUserStore((state) => state.clearUserInfo);
 
   const { loading, run } = useRequest(logout, {
     manual: true,
@@ -18,6 +20,7 @@ const LogoutConfirmModal = NiceModal.create(() => {
       setToken("");
       showSuccessToast("已退出登录");
       navigate(ROUTES.Login.href, { replace: true });
+      clearUserInfo();
       modal.remove();
     },
   });

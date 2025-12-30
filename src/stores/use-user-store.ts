@@ -5,6 +5,7 @@ import { devtools, persist } from "zustand/middleware";
 interface UserStore {
   userInfo: UserResp | null;
   setUserInfo: (userInfo: UserResp | null) => void;
+  clearUserInfo: () => void;
 }
 
 const useUserStore = create<UserStore>()(
@@ -13,6 +14,7 @@ const useUserStore = create<UserStore>()(
       (set) => ({
         userInfo: null,
         setUserInfo: (userInfo) => set({ userInfo }),
+        clearUserInfo: () => set({ userInfo: null }),
       }),
       { name: "fgo:userStore" }
     )
