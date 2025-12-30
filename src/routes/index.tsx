@@ -1,18 +1,13 @@
-import { getUserInfo } from "@/api/user";
-import { useRequest } from "ahooks";
+import useUserStore from "@/stores/use-user-store";
 
 export default function Index() {
-  const { data, loading } = useRequest(getUserInfo);
+  const userInfo = useUserStore((s) => s.userInfo);
 
   return (
     <div className="p-2">
-      {loading ? (
-        <h1 className="text-3xl font-bold underline">Loading...</h1>
-      ) : (
-        <h1 className="text-3xl font-bold underline">
-          Hello world! {data?.data.nickname}
-        </h1>
-      )}
+      <h1 className="text-3xl font-bold underline">
+        Hello world! {userInfo?.nickname}
+      </h1>
     </div>
   );
 }

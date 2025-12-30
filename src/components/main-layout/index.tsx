@@ -27,12 +27,14 @@ import LogoutConfirmModal from "./logout-confirm-modal";
 import NiceModal from "@ebay/nice-modal-react";
 
 import ThemeModeChanger from "../theme-mode-changer";
+import useUserStore from "@/stores/use-user-store";
 
 export default function MainLayout() {
   const { Header, Footer, Sider, Content } = Layout;
 
   const location = useLocation();
   const navigate = useNavigate();
+  const userInfo = useUserStore((s) => s.userInfo);
 
   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
 
@@ -136,12 +138,14 @@ export default function MainLayout() {
                     <Dropdown.Menu>
                       <Dropdown.Item>
                         <div className="flex items-center gap-4">
-                          <Avatar color="violet" size="small">
-                            FC
+                          <Avatar color="blue" size="small">
+                            {userInfo?.nickname}
                           </Avatar>
                           <div>
-                            <Typography.Text strong>aifuxi</Typography.Text>
-                            <div>UID: 1000000000</div>
+                            <Typography.Text strong>
+                              {userInfo?.nickname}
+                            </Typography.Text>
+                            <div>UID: {userInfo?.id}</div>
                           </div>
                         </div>
                       </Dropdown.Item>
@@ -159,8 +163,8 @@ export default function MainLayout() {
                   }
                 >
                   <div>
-                    <Avatar color="violet" size="small">
-                      FC
+                    <Avatar color="blue" size="small">
+                      {userInfo?.nickname}
                     </Avatar>
                   </div>
                 </Dropdown>
