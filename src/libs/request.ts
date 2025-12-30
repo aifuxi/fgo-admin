@@ -3,6 +3,7 @@ import type { CommonResponse } from "@/api/common";
 import PubSub from "pubsub-js";
 import { TOPIC_API_ERROR } from "@/constants/event-topics";
 import { getToken, setToken } from "@/utils/token";
+import { showWarningToast } from "./toast";
 
 const request = axios.create({
   baseURL: "/",
@@ -38,6 +39,7 @@ request.interceptors.response.use(
 
     if (error.response?.status === 401) {
       setToken("");
+      showWarningToast("登录信息已失效，即将退出");
       setTimeout(() => {
         window.location.href = `/login`;
       }, 1000);

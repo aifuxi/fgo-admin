@@ -11,6 +11,10 @@ export const ROUTES = {
     href: "/category",
     name: "分类管理",
   },
+  User: {
+    href: "/user",
+    name: "用户管理",
+  },
   Tag: {
     href: "/tag",
     name: "标签管理",

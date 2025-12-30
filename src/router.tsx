@@ -4,6 +4,7 @@ import Login from "@/routes/login";
 import Index from "@/routes";
 import Category from "@/routes/category";
 import Tag from "@/routes/tag";
+import User from "@/routes/user";
 import NiceModal from "@ebay/nice-modal-react";
 import BlogList from "@/routes/blog/blog-list";
 import BlogCreate from "@/routes/blog/blog-create";
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
       {
         path: ROUTES.Tag.href,
         Component: Tag,
+      },
+      {
+        path: ROUTES.User.href,
+        Component: User,
       },
       {
         path: ROUTES.BlogList.href,

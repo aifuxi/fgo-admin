@@ -5,20 +5,33 @@ import { showSuccessToast } from "@/libs/toast";
 import { setToken } from "@/utils/token";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "@/constants/route";
+import { useRequest } from "ahooks";
+import { logout } from "@/api/user";
 
 const LogoutConfirmModal = NiceModal.create(() => {
   const modal = NiceModal.useModal();
   const navigate = useNavigate();
+
+  const { loading, run } = useRequest(logout, {
+    manual: true,
+    onSuccess: () => {
+      setToken("");
+      showSuccessToast("已退出登录");
+      navigate(ROUTES.Login.href, { replace: true });
+      modal.remove();
+    },
+  });
 
   return (
     <NiceSemiModal
       modal={modal}
       title="退出登录"
       centered
+      okButtonProps={{
+        loading,
+      }}
       onOk={() => {
-        setToken("");
-        showSuccessToast("退出登录成功");
-        navigate(ROUTES.Login.href, { replace: true });
+        run();
       }}
     >
       你确定要退出登录吗？

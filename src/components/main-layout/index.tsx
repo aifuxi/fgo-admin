@@ -26,6 +26,8 @@ import { useEffect, useState } from "react";
 import LogoutConfirmModal from "./logout-confirm-modal";
 import NiceModal from "@ebay/nice-modal-react";
 
+import ThemeModeChanger from "../theme-mode-changer";
+
 export default function MainLayout() {
   const { Header, Footer, Sider, Content } = Layout;
 
@@ -93,6 +95,14 @@ export default function MainLayout() {
                 },
               ],
             },
+            {
+              itemKey: ROUTES.User.href,
+              text: ROUTES.User.name,
+              icon: <IconUser size="large" />,
+              onClick: () => {
+                navigate(ROUTES.User.href);
+              },
+            },
           ]}
           header={{
             logo: <IconSemiLogo style={{ fontSize: 36 }} />,
@@ -108,16 +118,17 @@ export default function MainLayout() {
           <Nav
             mode="horizontal"
             footer={
-              <>
+              <div className="flex items-center gap-3">
+                <ThemeModeChanger />
                 <Button
                   theme="borderless"
                   icon={<IconBell size="large" />}
-                  className="text-semi-text-2 mr-3"
+                  className="text-semi-text-2!"
                 />
                 <Button
                   theme="borderless"
                   icon={<IconHelpCircle size="large" />}
-                  className="text-semi-text-2 mr-3"
+                  className="text-semi-text-2!"
                 />
                 <Dropdown
                   position="bottomLeft"
@@ -153,7 +164,7 @@ export default function MainLayout() {
                     </Avatar>
                   </div>
                 </Dropdown>
-              </>
+              </div>
             }
           ></Nav>
         </Header>

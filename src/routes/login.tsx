@@ -9,6 +9,7 @@ import {
 } from "@douyinfe/semi-illustrations";
 import { showSuccessToast } from "@/libs/toast";
 import { ROUTES } from "@/constants/route";
+import ThemeModeChanger from "@/components/theme-mode-changer";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -24,8 +25,9 @@ export default function Login() {
 
   return (
     <Layout className="relative h-svh flex flex-col">
-      <Layout.Header className="px-8 py-6">
+      <Layout.Header className="px-8 py-6 flex items-center justify-between">
         <Typography.Title heading={4}>后台管理</Typography.Title>
+        <ThemeModeChanger />
       </Layout.Header>
       <Layout.Content className="flex-1 h-full grid grid-cols-12">
         <div className="col-span-7 flex flex-col h-full justify-center items-center">
