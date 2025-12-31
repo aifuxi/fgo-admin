@@ -1,4 +1,7 @@
-import type { PermissionCode } from "@/constants/permission-codes";
+import {
+  PERMISSION_CODES,
+  type PermissionCode,
+} from "@/constants/permission-codes";
 import useUserStore from "@/stores/use-user-store";
 import {
   IllustrationNoAccess,
@@ -30,10 +33,13 @@ export default function ProtectRoute({
       return [...prev, ...s];
     }, [] as string[]) ?? [];
 
-  console.log("permissionCodes", permissionCodes);
+  const requireSomePermissionCodesTemp = [
+    ...(requireSomePermissionCodes ?? []),
+    PERMISSION_CODES.PermissionAdminAll,
+  ];
 
   const hasSomePermission =
-    requireSomePermissionCodes?.some((item) =>
+    requireSomePermissionCodesTemp?.some((item) =>
       permissionCodes.includes(item)
     ) ?? false;
 
